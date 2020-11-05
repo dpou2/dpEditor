@@ -1,0 +1,16 @@
+{
+  "name": "dpeditor",
+  "version": "0.0.1",
+  "description": "一个简易的富文本编辑器",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "TypeScript",
+    "editor",
+    "web"
+  ],
+  "author": "dpou2",
+  "license": "ISC"
+}
