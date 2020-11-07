@@ -1,0 +1,54 @@
+.dpEditor_bar {
+    box-sizing: border-box;
+    list-style: none;
+    height: 36px;
+    width: 100%;
+    border-bottom: 1px solid #c9d0d0;
+}
+
+.dpEditor_bar .dpEditor_bar_option {
+    height: 100%;
+    display: inline-block;
+    cursor: pointer;
+    line-height: 2;
+    padding: 0 10px;
+    user-select: none;
+}
+
+.dpEditor_bar .dpEditor_bar_option:hover {
+    position: relative;
+    background-color: #d7d2cc;
+}
+
+.dpEditor_bar .dpEditor_bar_option .dpEditor_bar_option_do {
+    color: #4d5656;
+    width: 70px;
+    border: 1px solid #c9d0d0;
+    border-radius: 3px;
+    padding: 4px 0 0 0;
+    text-align: center;
+    display: none;
+}
+
+.dpEditor_bar .dpEditor_bar_option:hover .dpEditor_bar_option_do {
+    display: block;
+    position: absolute;
+}
+
+.dpEditor_bar .dpEditor_bar_option  .dpEditor_bar_option_do_list {
+    font-size: 15px;
+}
+.dpEditor_bar .dpEditor_bar_option  .dpEditor_bar_option_do_list:hover {
+    background-color: #cee3e3;
+}
+
+.dpEditor_bar .dpEditor_bar_option .dpEditor_bar_option_do_list_header {
+    font-size: 14px;
+    font-weight: lighter;
+    padding: 2px 4px;
+    border-bottom: 1px solid #c0c0c0;
+}
+
+.dpEditor_bar .dpEditor_bar_option .dpEditor_bar_option_do_list_header:hover {
+    background-color: #fff;
+}

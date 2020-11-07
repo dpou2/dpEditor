@@ -1,0 +1,100 @@
+{
+  "id": "2187733",
+  "name": "editor",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1567513",
+      "name": "code",
+      "font_class": "code",
+      "unicode": "e654",
+      "unicode_decimal": 58964
+    },
+    {
+      "icon_id": "1713979",
+      "name": "72-字体行高",
+      "font_class": "lineheight",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "1798234",
+      "name": "下划线",
+      "font_class": "bottomline",
+      "unicode": "e6d3",
+      "unicode_decimal": 59091
+    },
+    {
+      "icon_id": "4890369",
+      "name": "标题正文切换",
+      "font_class": "biaoti",
+      "unicode": "e6e2",
+      "unicode_decimal": 59106
+    },
+    {
+      "icon_id": "5202923",
+      "name": "斜体",
+      "font_class": "xieti",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "6337466",
+      "name": "字体加粗",
+      "font_class": "bold",
+      "unicode": "ec83",
+      "unicode_decimal": 60547
+    },
+    {
+      "icon_id": "6337473",
+      "name": "左对齐",
+      "font_class": "duiqi",
+      "unicode": "ec86",
+      "unicode_decimal": 60550
+    },
+    {
+      "icon_id": "7274115",
+      "name": "字号",
+      "font_class": "zihao",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "11177629",
+      "name": "画笔",
+      "font_class": "zitiyanse",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "11322517",
+      "name": "文字颜色",
+      "font_class": "wenziyanse",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "12323755",
+      "name": "全屏",
+      "font_class": "quanping",
+      "unicode": "e655",
+      "unicode_decimal": 58965
+    },
+    {
+      "icon_id": "15343002",
+      "name": "连接",
+      "font_class": "lianjie",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "16432298",
+      "name": "列表",
+      "font_class": "liebiao",
+      "unicode": "e681",
+      "unicode_decimal": 59009
+    }
+  ]
+}
