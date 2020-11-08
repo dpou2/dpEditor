@@ -98,12 +98,13 @@ function createBar(target: HTMLElement, options: Array<string> | string) {
     // 绑定事件
     li.addEventListener('click', (e: any) => {
       const setFormat = e.target.dataset.opType && e.target.dataset.opType.split('-')
-      debugger
       if(setFormat) {
         exec(setFormat[0], setFormat[1])
       }else {
         alert('不是有效的操作')
       }
+
+    // e.currentTarget.removeA
     })
     bar.appendChild(li)
   }
@@ -141,10 +142,10 @@ function getSelectOptions(type: string) {
     case 'align':
       ul = createDoOptions(alignDoOptions, '对齐方式', 'align')
       break
-    case 'bgColor':
+    case 'backColor':
       ul = createDoOptions(colorDoOptions, '背景颜色', 'backColor')
       break
-    case 'color':
+    case 'foreColor':
       ul = createDoOptions(colorDoOptions, '文字颜色', 'foreColor')
       break
   }
@@ -160,7 +161,7 @@ function createDoOptions(type: Array<string>, topText: string, id: string) {
     let colorType = (id === 'foreColor' || id === 'backColor') ? id : ''
     let icon = ''
     if(colorType) {
-      icon = `<i class="iconfont icon-${colorType}" style="color: ${type[i]};">&nbsp${content}</i>`
+      icon = `<i class="iconfont icon-${colorType}" data-op-type=${id}-${type[i]}-types style="color: ${type[i]};">&nbsp${content}</i>`
     }
     allLi = allLi + `<li  data-op-type=${id}-${type[i]}-types class="dpEditor_bar_option_do_list" id="icon_id_i_${type[i]}">${colorType ? icon: content}</li>`
   }

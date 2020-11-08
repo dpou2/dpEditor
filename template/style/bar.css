@@ -38,6 +38,7 @@
 
 .dpEditor_bar .dpEditor_bar_option  .dpEditor_bar_option_do_list {
     font-size: 15px;
+    background-color: #fff;
 }
 .dpEditor_bar .dpEditor_bar_option  .dpEditor_bar_option_do_list:hover {
     background-color: #cee3e3;
