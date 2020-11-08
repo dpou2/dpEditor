@@ -1,9 +1,8 @@
 .dpEditor_bar {
-    box-sizing: border-box;
     list-style: none;
     height: 36px;
     width: 100%;
-    border-bottom: 1px solid #c9d0d0;
+    border: 1px solid #c9d0d0;
 }
 
 .dpEditor_bar .dpEditor_bar_option {

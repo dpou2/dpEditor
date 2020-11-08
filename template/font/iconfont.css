@@ -47,11 +47,11 @@
   content: "\e623";
 }
 
-.icon-bgColor:before {
+.icon-backColor:before {
   content: "\e610";
 }
 
-.icon-color:before {
+.icon-foreColor:before {
   content: "\e609";
 }
 

@@ -8,11 +8,11 @@ const fontStyleDoOptions = ['黑体', '宋体', '雅黑']
 const rawHeightDoOptions = ['1', '1.2', '1.6', '2']
 const listDoOptions = ["insertUnorderedList", "insertOrderedList"] // 序列
 const alignDoOptions = ['justifyLeft', "justifyRight", 'justifyCenter'] // 对齐方式
-const colorDoOptions = ['black', "gray", 'red', 'blue', 'lightBlue', 'green', 'orange']
+const colorDoOptions = ['black', "gray", 'red', 'blue',  'green', 'orange']
 // bgColor - #222 #ccc #FF6666 #003399 #0099CC  #009966 #FF9900
 
 
-const editorOptions = ['italics', 'bold', 'underline', 'hangGao', 'heading', 'italics', 'align', 'fontSize', 'bgColor', 'color', 'fullScreen', 'url', 'list']
+const editorOptions = ['italics', 'bold', 'underline', 'hangGao', 'heading', 'italics', 'align', 'fontSize', 'backColor', 'foreColor', 'fullScreen', 'url', 'list']
 
 const testBtn = document.getElementById('testBtn')
 if (testBtn) {
@@ -24,10 +24,14 @@ if (testBtn) {
 if (Editor) {
   Editor.setAttribute('contenteditable', 'true')
   Editor.setAttribute('spellcheck', 'false')
-  Editor.setAttribute('style', "height: 300px; width: 80%; margin: 10px auto 0 auto; border: 1px solid black; line-height: 1.6;overflow: auto;")
-  // paste(Editor)
+  if(Editor.parentElement) {
+    Editor.parentElement.setAttribute('style', "position: relative; width: 80%;margin: 10px auto 0 auto;")
+  }
+  // Editor.setAttribute('style', "height: 300px; width: 80%; margin: 10px auto 0 auto; border: 1px solid black; line-height: 1.6;overflow: auto;")
+  Editor.setAttribute('style',
+      'background: #eee; height: 100%;width: 100%; padding: 4px 10px; border: 1px solid #c9d0d0; border-top: none; line-height: 1.6;overflow: auto; min-height: 250px; ')  // paste(Editor)
   // testCmd('bold')
-  createBar(Editor, ['italics', 'bold', 'underline', 'hangGao', 'heading', 'italics', 'align', 'fontSize', 'bgColor', 'color', 'fullScreen', 'url', 'list'])
+  createBar(Editor, editorOptions)
 } else {
   console.error('初始化编辑器错误')
 }
@@ -52,6 +56,7 @@ function paste(target: HTMLElement) {
 }
 
 function exec(cmd: string, value?: string) {
+  debugger
   // 校验命令
   if (cmd) {
     document.execCommand(cmd, false, value)
@@ -90,9 +95,21 @@ function createBar(target: HTMLElement, options: Array<string> | string) {
       }
     }
     li.classList.add('dpEditor_bar_option')
+    // 绑定事件
+    li.addEventListener('click', (e: any) => {
+      const setFormat = e.target.dataset.opType && e.target.dataset.opType.split('-')
+      debugger
+      if(setFormat) {
+        exec(setFormat[0], setFormat[1])
+      }else {
+        alert('不是有效的操作')
+      }
+    })
     bar.appendChild(li)
   }
-  target.appendChild(bar)
+  if(target.parentElement) {
+    target.parentElement.prepend(bar)
+  }
 }
 
 // 获取对应图标内容
@@ -125,10 +142,10 @@ function getSelectOptions(type: string) {
       ul = createDoOptions(alignDoOptions, '对齐方式', 'align')
       break
     case 'bgColor':
-      ul = createDoOptions(colorDoOptions, '背景颜色', 'bgColor')
+      ul = createDoOptions(colorDoOptions, '背景颜色', 'backColor')
       break
     case 'color':
-      ul = createDoOptions(colorDoOptions, '文字颜色', 'color')
+      ul = createDoOptions(colorDoOptions, '文字颜色', 'foreColor')
       break
   }
   return ul
@@ -140,16 +157,16 @@ function createDoOptions(type: Array<string>, topText: string, id: string) {
   let allLi = `<li class="dpEditor_bar_option_do_list dpEditor_bar_option_do_list_header">${topText}</li>`
   for (let i = 0; i < type.length; i++) {
     let content = getChinaText(type[i])
-    let colorType = (id === 'color' || id === 'bgColor') ? id : ''
-    let icon
+    let colorType = (id === 'foreColor' || id === 'backColor') ? id : ''
+    let icon = ''
     if(colorType) {
-      icon = getOptionsIcon(colorType)
-      icon.innerHTML(content)
-      // colorType === 'color' ? :
+      icon = `<i class="iconfont icon-${colorType}" style="color: ${type[i]};">&nbsp${content}</i>`
     }
-    allLi = allLi + `<li  data-type=${id} class="dpEditor_bar_option_do_list">${content}</li>`
+    allLi = allLi + `<li  data-op-type=${id}-${type[i]}-types class="dpEditor_bar_option_do_list" id="icon_id_i_${type[i]}">${colorType ? icon: content}</li>`
   }
-  ul && ul.insertAdjacentHTML('afterbegin', allLi)
+  // ul && ul.insertAdjacentHTML('afterbegin', allLi)
+  ul.innerHTML = allLi
+  console.log(ul)
   return ul
 }
 
