@@ -3,11 +3,13 @@ const Editor = document.getElementById('dpEditor')
 // 为元素添加可编辑属性
 
 const headingDoOptions = ['H1', 'H2', 'H3', 'H4', 'normal']
-const fontSizeDoOptions = [ '12px', '16px', '18px', '36px', '48px']
+const fontSizeDoOptions = ['12px', '16px', '18px', '36px', '48px']
 const fontStyleDoOptions = ['黑体', '宋体', '雅黑']
 const rawHeightDoOptions = ['1', '1.2', '1.6', '2']
-const listDoOptions = ["无序列表", "有序列表"] // 序列
-const alignDoOptions = ['向左', "向右", '居中'] // 对齐方式
+const listDoOptions = ["insertUnorderedList", "insertOrderedList"] // 序列
+const alignDoOptions = ['justifyLeft', "justifyRight", 'justifyCenter'] // 对齐方式
+const colorDoOptions = ['black', "gray", 'red', 'blue', 'lightBlue', 'green', 'orange']
+// bgColor - #222 #ccc #FF6666 #003399 #0099CC  #009966 #FF9900
 
 
 const editorOptions = ['italics', 'bold', 'underline', 'hangGao', 'heading', 'italics', 'align', 'fontSize', 'bgColor', 'color', 'fullScreen', 'url', 'list']
@@ -36,7 +38,6 @@ function paste(target: HTMLElement) {
     let parseContent0 = (event.clipboardData || (window as any).clipboardData).getData('text/html')
     console.log('复制的内容0是', parseContent0)
     console.log('复制的内容是', parseContent)
-    debugger
     // 处理内容
     const selection = window.getSelection()
     // 如果页面新加载未有被点击的情况返回
@@ -106,41 +107,95 @@ function getSelectOptions(type: string) {
   let ul
   switch (type) {
     case 'heading':
-      ul = createDoOptions(headingDoOptions, '标题文字')
+      ul = createDoOptions(headingDoOptions, '标题文字', 'heading')
       break
     case 'fontSize':
-      ul = createDoOptions(fontSizeDoOptions, '字体大小')
+      ul = createDoOptions(fontSizeDoOptions, '字体大小', 'fontSize')
       break
     case 'fontStyle':
-      ul = createDoOptions(fontStyleDoOptions, '字体样式')
+      ul = createDoOptions(fontStyleDoOptions, '字体样式', 'fontStyle')
       break
     case 'hangGao':
-      ul = createDoOptions(rawHeightDoOptions, '行高设置')
+      ul = createDoOptions(rawHeightDoOptions, '行高设置', 'rowHeight')
       break
     case 'list':
-      ul = createDoOptions(listDoOptions, '列表设置')
+      ul = createDoOptions(listDoOptions, '列表设置', 'list')
       break
     case 'align':
-      ul = createDoOptions(alignDoOptions, '对齐方式')
+      ul = createDoOptions(alignDoOptions, '对齐方式', 'align')
+      break
+    case 'bgColor':
+      ul = createDoOptions(colorDoOptions, '背景颜色', 'bgColor')
+      break
+    case 'color':
+      ul = createDoOptions(colorDoOptions, '文字颜色', 'color')
       break
   }
   return ul
 }
 
-function createDoOptions(type: Array<string>, topText: string) {
+function createDoOptions(type: Array<string>, topText: string, id: string) {
   let ul = document.createElement('ul')
   ul.classList.add('dpEditor_bar_option_do')
-  let allLi = `<li  class="dpEditor_bar_option_do_list dpEditor_bar_option_do_list_header">${topText}</li>`
+  let allLi = `<li class="dpEditor_bar_option_do_list dpEditor_bar_option_do_list_header">${topText}</li>`
   for (let i = 0; i < type.length; i++) {
-    allLi = allLi + `<li class="dpEditor_bar_option_do_list">${type[i]}</li>`
+    let content = getChinaText(type[i])
+    let colorType = (id === 'color' || id === 'bgColor') ? id : ''
+    let icon
+    if(colorType) {
+      icon = getOptionsIcon(colorType)
+      icon.innerHTML(content)
+      // colorType === 'color' ? :
+    }
+    allLi = allLi + `<li  data-type=${id} class="dpEditor_bar_option_do_list">${content}</li>`
   }
   ul && ul.insertAdjacentHTML('afterbegin', allLi)
   return ul
 }
 
 
-
-
+function getChinaText(types: string) {
+  let i = types
+  switch (types) {
+    case 'justifyLeft':
+      i = '向左'
+      break
+    case 'justifyRight':
+      i = '向右'
+      break
+    case 'justifyCenter':
+      i = '居中'
+      break
+    case 'insertUnorderedList':
+      i = '无序列表'
+      break
+    case 'insertOrderedList':
+      i = '有序列表'
+      break
+    case 'black':
+      i = '黑色'
+      break
+    case 'gray':
+      i = '灰色'
+      break
+    case 'red':
+      i = '红色'
+      break
+    case 'blue':
+      i = '蓝色'
+      break
+    case 'lightBlue':
+      i = '浅蓝'
+      break
+    case 'green':
+      i = '绿色'
+      break
+    case 'orange':
+      i = '橙色'
+      break
+  }
+  return i
+}
 
 
 
