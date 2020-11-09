@@ -32,7 +32,7 @@
 .dpEditor_bar .dpEditor_bar_option:hover .dpEditor_bar_option_do {
     display: block;
     position: absolute;
-    top: 35px;
+    top: 33px;
     left: 0;
 }
 
@@ -53,4 +53,19 @@
 
 .dpEditor_bar .dpEditor_bar_option .dpEditor_bar_option_do_list_header:hover {
     background-color: #fff;
+}
+.line-height-10 {
+    line-height: 1!important;
+}
+.line-height-12 {
+    line-height: 1.2!important;
+}
+.line-height-16 {
+    line-height: 1.6!important;
+}
+.line-height-20 {
+    line-height: 2!important;
+}
+.set-h1 {
+
 }

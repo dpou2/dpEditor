@@ -3,16 +3,16 @@ const Editor = document.getElementById('dpEditor')
 // 为元素添加可编辑属性
 
 const headingDoOptions = ['H1', 'H2', 'H3', 'H4', 'normal']
-const fontSizeDoOptions = ['12px', '16px', '18px', '36px', '48px']
+const fontSizeDoOptions = ['10px', '12px', '16px', '18px', '24px', '36px', '48px']
 const fontStyleDoOptions = ['黑体', '宋体', '雅黑']
 const rawHeightDoOptions = ['1', '1.2', '1.6', '2']
 const listDoOptions = ["insertUnorderedList", "insertOrderedList"] // 序列
 const alignDoOptions = ['justifyLeft', "justifyRight", 'justifyCenter'] // 对齐方式
-const colorDoOptions = ['black', "gray", 'red', 'blue',  'green', 'orange']
+const colorDoOptions = ['black', "gray", 'red', 'blue', 'green', 'orange']
 // bgColor - #222 #ccc #FF6666 #003399 #0099CC  #009966 #FF9900
 
 
-const editorOptions = ['italics', 'bold', 'underline', 'hangGao', 'heading', 'italics', 'align', 'fontSize', 'backColor', 'foreColor', 'fullScreen', 'url', 'list']
+const editorOptions = ['italic', 'bold', 'underline', 'hangGao', 'heading', 'align', 'fontSize', 'backColor', 'foreColor', 'fullScreen', 'url', 'list']
 
 const testBtn = document.getElementById('testBtn')
 if (testBtn) {
@@ -24,12 +24,12 @@ if (testBtn) {
 if (Editor) {
   Editor.setAttribute('contenteditable', 'true')
   Editor.setAttribute('spellcheck', 'false')
-  if(Editor.parentElement) {
+  if (Editor.parentElement) {
     Editor.parentElement.setAttribute('style', "position: relative; width: 80%;margin: 10px auto 0 auto;")
   }
   // Editor.setAttribute('style', "height: 300px; width: 80%; margin: 10px auto 0 auto; border: 1px solid black; line-height: 1.6;overflow: auto;")
   Editor.setAttribute('style',
-      'background: #eee; height: 100%;width: 100%; padding: 4px 10px; border: 1px solid #c9d0d0; border-top: none; line-height: 1.6;overflow: auto; min-height: 250px; ')  // paste(Editor)
+    'background: #eee; height: 100%;width: 100%; padding: 4px 10px; border: 1px solid #c9d0d0; border-top: none; line-height: 1.6;overflow: auto; min-height: 250px; ')  // paste(Editor)
   // testCmd('bold')
   createBar(Editor, editorOptions)
 } else {
@@ -55,11 +55,10 @@ function paste(target: HTMLElement) {
   })
 }
 
-function exec(cmd: string, value?: string) {
-  debugger
+function exec(cmd: string, value?: any) {
   // 校验命令
   if (cmd) {
-    document.execCommand(cmd, false, value)
+    console.log(document.execCommand(cmd, false, value))
   }
 }
 
@@ -88,6 +87,8 @@ function createBar(target: HTMLElement, options: Array<string> | string) {
     const li = document.createElement('li')
     let icon = getOptionsIcon(options[i])
     if (icon) {
+      icon.dataset.opType = options[i]
+      li.dataset.opType = options[i]
       li.appendChild(icon)
       let ul2 = getSelectOptions(options[i])
       if (ul2) {
@@ -97,20 +98,34 @@ function createBar(target: HTMLElement, options: Array<string> | string) {
     li.classList.add('dpEditor_bar_option')
     // 绑定事件
     li.addEventListener('click', (e: any) => {
-      const setFormat = e.target.dataset.opType && e.target.dataset.opType.split('-')
-      if(setFormat) {
-        exec(setFormat[0], setFormat[1])
-      }else {
+      const opType = e.target.dataset.opType
+      const opValue = e.target.dataset.opValue
+      if (opType) {
+        if (opType === 'rowHeight') {
+          setLineHeight(target, opValue)
+        } else {
+          opValue ? exec(opType, opValue) : exec(opType, null)
+        }
+      } else {
         alert('不是有效的操作')
       }
-
-    // e.currentTarget.removeA
     })
     bar.appendChild(li)
   }
-  if(target.parentElement) {
+  if (target.parentElement) {
     target.parentElement.prepend(bar)
   }
+}
+
+// 设置行高
+function setLineHeight(target: HTMLElement, lh: string) {
+  target.classList.remove('line-height-10', 'line-height-20', 'line-height-12', 'line-height-16')
+  target.classList.add(`line-height-${Number(lh) * 10}`)
+}
+
+// 设置加粗
+function setBold() {
+
 }
 
 // 获取对应图标内容
@@ -125,7 +140,7 @@ function getSelectOptions(type: string) {
   let ul
   switch (type) {
     case 'heading':
-      ul = createDoOptions(headingDoOptions, '标题文字', 'heading')
+      ul = createDoOptions(headingDoOptions, '标题文字', 'formatBlock')
       break
     case 'fontSize':
       ul = createDoOptions(fontSizeDoOptions, '字体大小', 'fontSize')
@@ -140,7 +155,7 @@ function getSelectOptions(type: string) {
       ul = createDoOptions(listDoOptions, '列表设置', 'list')
       break
     case 'align':
-      ul = createDoOptions(alignDoOptions, '对齐方式', 'align')
+      ul = createDoOptions([...alignDoOptions], '对齐方式', 'align')
       break
     case 'backColor':
       ul = createDoOptions(colorDoOptions, '背景颜色', 'backColor')
@@ -152,18 +167,25 @@ function getSelectOptions(type: string) {
   return ul
 }
 
-function createDoOptions(type: Array<string>, topText: string, id: string) {
+function createDoOptions(type: Array<string>, topText: string, op: string) {
   let ul = document.createElement('ul')
   ul.classList.add('dpEditor_bar_option_do')
   let allLi = `<li class="dpEditor_bar_option_do_list dpEditor_bar_option_do_list_header">${topText}</li>`
   for (let i = 0; i < type.length; i++) {
     let content = getChinaText(type[i])
-    let colorType = (id === 'foreColor' || id === 'backColor') ? id : ''
+    let colorType = (op === 'foreColor' || op === 'backColor') ? op : ''
     let icon = ''
-    if(colorType) {
-      icon = `<i class="iconfont icon-${colorType}" data-op-type=${id}-${type[i]}-types style="color: ${type[i]};">&nbsp${content}</i>`
+
+    let newValue = switchValue(op, type[i])
+
+    if (colorType) {
+      icon = `<i class="iconfont icon-${colorType}"  data-op-type=${op}  data-op-value=${newValue ? newValue : type[i]}  style="color: ${type[i]};">&nbsp${content}</i>`
     }
-    allLi = allLi + `<li  data-op-type=${id}-${type[i]}-types class="dpEditor_bar_option_do_list" id="icon_id_i_${type[i]}">${colorType ? icon: content}</li>`
+
+    if (op === 'align' || op.indexOf('justify') > -1) {
+      op = type[i]
+    }
+    allLi = allLi + `<li  data-op-type=${op}  data-op-value=${newValue ? newValue : type[i]}   class="dpEditor_bar_option_do_list" id="icon_id_i_${type[i]}">${colorType ? icon : content}</li>`
   }
   // ul && ul.insertAdjacentHTML('afterbegin', allLi)
   ul.innerHTML = allLi
@@ -171,6 +193,30 @@ function createDoOptions(type: Array<string>, topText: string, id: string) {
   return ul
 }
 
+function switchValue(type: string, value: string): string {
+  if (type === 'fontSize') {
+    switch (value) {
+      case '10px':
+        return '1'
+      case '12px':
+        return '2'
+      case '16px':
+        return '3'
+      case '18px':
+        return '4'
+      case '24px':
+        return '6'
+      case '36px':
+        return '6'
+      case '48px':
+        return '7'
+      default:
+        return ''
+    }
+  } else {
+    return ''
+  }
+}
 
 function getChinaText(types: string) {
   let i = types
