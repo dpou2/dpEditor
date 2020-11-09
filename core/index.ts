@@ -14,12 +14,12 @@ const colorDoOptions = ['black', "gray", 'red', 'blue', 'green', 'orange']
 
 const editorOptions = ['italic', 'bold', 'underline', 'hangGao', 'heading', 'align', 'fontSize', 'backColor', 'foreColor', 'fullScreen', 'url', 'list']
 
-const testBtn = document.getElementById('testBtn')
-if (testBtn) {
-  testBtn.addEventListener('click', () => {
-    testCmd('bold')
-  })
-}
+// const testBtn = document.getElementById('testBtn')
+// if (testBtn) {
+//   testBtn.addEventListener('click', () => {
+//     testCmd('bold')
+//   })
+// }
 
 if (Editor) {
   Editor.setAttribute('contenteditable', 'true')

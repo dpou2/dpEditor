@@ -18,12 +18,12 @@ var alignDoOptions = ['justifyLeft', "justifyRight", 'justifyCenter']; // 对齐
 var colorDoOptions = ['black', "gray", 'red', 'blue', 'green', 'orange'];
 // bgColor - #222 #ccc #FF6666 #003399 #0099CC  #009966 #FF9900
 var editorOptions = ['italic', 'bold', 'underline', 'hangGao', 'heading', 'align', 'fontSize', 'backColor', 'foreColor', 'fullScreen', 'url', 'list'];
-var testBtn = document.getElementById('testBtn');
-if (testBtn) {
-    testBtn.addEventListener('click', function () {
-        testCmd('bold');
-    });
-}
+// const testBtn = document.getElementById('testBtn')
+// if (testBtn) {
+//   testBtn.addEventListener('click', () => {
+//     testCmd('bold')
+//   })
+// }
 if (Editor) {
     Editor.setAttribute('contenteditable', 'true');
     Editor.setAttribute('spellcheck', 'false');
