@@ -32,6 +32,15 @@ if (Editor) {
     'background: #eee; height: 100%;width: 100%; padding: 4px 10px; border: 1px solid #c9d0d0; border-top: none; line-height: 1.6;overflow: auto; min-height: 250px; ')  // paste(Editor)
   // testCmd('bold')
   createBar(Editor, editorOptions)
+  let p = document.createElement('p')
+  Editor.appendChild(p)
+
+  // 添加监听事件
+  Editor.addEventListener('keydown', e => {
+    if(e.code === '13') {
+
+    }
+  })
 } else {
   console.error('初始化编辑器错误')
 }

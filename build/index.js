@@ -34,6 +34,8 @@ if (Editor) {
     Editor.setAttribute('style', 'background: #eee; height: 100%;width: 100%; padding: 4px 10px; border: 1px solid #c9d0d0; border-top: none; line-height: 1.6;overflow: auto; min-height: 250px; '); // paste(Editor)
     // testCmd('bold')
     createBar(Editor, editorOptions);
+    var p = document.createElement('p');
+    Editor.appendChild(p);
 }
 else {
     console.error('初始化编辑器错误');
